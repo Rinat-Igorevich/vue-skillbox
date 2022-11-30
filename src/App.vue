@@ -51,9 +51,7 @@ export default {
   computed: {
     filteredProducts() {
       let filteredProducts = products;
-      console.log(321);
       if (this.filterPriceFrom > 0) {
-        console.log(456);
         // eslint-disable-next-line max-len
         filteredProducts = filteredProducts.filter((product) => product.price > this.filterPriceFrom);
       }
@@ -66,9 +64,9 @@ export default {
         filteredProducts = filteredProducts.filter((product) => product.categoryId === this.filterCategoryId);
       }
       if (this.filterColor !== '') {
-        console.log(123);
         // eslint-disable-next-line max-len
-        filteredProducts = filteredProducts.filter((product) => product.color === this.filterColor);
+        filteredProducts = filteredProducts
+          .filter((product) => product.colors.includes(this.filterColor));
       }
 
       return filteredProducts;
