@@ -30,7 +30,7 @@ import BasePagination from '@/components/BasePagination.vue';
 import ProductFilter from '@/components/ProductFilter.vue';
 
 export default {
-
+  name: 'MainPage',
   components: {
     ProductList,
     BasePagination,
