@@ -63,7 +63,8 @@ export default {
       }
       if (this.filterColor !== '') {
         // eslint-disable-next-line max-len
-        filteredProducts = filteredProducts.filter((product) => product.color === this.filterColor);
+        filteredProducts = filteredProducts
+          .filter((product) => product.colors.includes(this.filterColor));
       }
 
       return filteredProducts;
