@@ -101,8 +101,8 @@
 
             <div class="item__row">
             <form-counter
+              :amount="productAmount"
               :id="product.id"
-              :count="productAmount"
               @counter-change="counterChange">
             </form-counter>
 

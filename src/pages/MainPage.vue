@@ -50,20 +50,20 @@ export default {
     filteredProducts() {
       let filteredProducts = products;
       if (this.filterPriceFrom > 0) {
-        // eslint-disable-next-line max-len
-        filteredProducts = filteredProducts.filter((product) => product.price > this.filterPriceFrom);
+        filteredProducts = filteredProducts
+          .filter((product) => product.price > this.filterPriceFrom);
       }
       if (this.filterPriceTo > 0) {
-        // eslint-disable-next-line max-len
-        filteredProducts = filteredProducts.filter((product) => product.price < this.filterPriceTo);
+        filteredProducts = filteredProducts
+          .filter((product) => product.price < this.filterPriceTo);
       }
       if (this.filterCategoryId) {
-        // eslint-disable-next-line max-len
-        filteredProducts = filteredProducts.filter((product) => product.categoryId === this.filterCategoryId);
+        filteredProducts = filteredProducts
+          .filter((product) => product.categoryId === this.filterCategoryId);
       }
       if (this.filterColor !== '') {
-        // eslint-disable-next-line max-len
-        filteredProducts = filteredProducts.filter((product) => product.color === this.filterColor);
+        filteredProducts = filteredProducts
+          .filter((product) => product.colors.includes(this.filterColor));
       }
 
       return filteredProducts;

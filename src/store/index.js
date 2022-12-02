@@ -26,12 +26,17 @@ export default new Vuex.Store({
         });
       }
     },
-    changeProductAmount(state, { productId, amount }) {
+    updateCartProductAmount(state, { productId, amount }) {
       const item = state
         .cartProducts
         // eslint-disable-next-line no-shadow
         .find((item) => item.productId === productId);
-      item.amount = amount;
+      if (item) {
+        item.amount = amount;
+      }
+    },
+    deleteCartProduct(state, productId) {
+      state.cartProducts = state.cartProducts.filter((item) => item.productId !== productId);
     },
   },
   getters: {
@@ -40,6 +45,13 @@ export default new Vuex.Store({
         ...item,
         product: products.find((p) => p.id === item.productId),
       }));
+    },
+    cartTotalPrice(state, getters) {
+      return getters.cartDetailProducts
+        .reduce((acc, item) => (item.product.price * item.amount) + acc, 0);
+    },
+    cartProductsAmount(state) {
+      return state.cartProducts.length;
     },
   },
 });

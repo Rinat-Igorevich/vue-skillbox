@@ -8,7 +8,7 @@
       </svg>
     </button>
 
-    <input type="text" v-model="getCount">
+    <input type="text" v-model.number="getCount">
 
     <button type="button"
             aria-label="Добавить один товар"
@@ -22,19 +22,21 @@
 
 <script>
 export default {
-  props: ['count', 'id'],
+  props: ['amount', 'id'],
   name: 'FormCounter',
   methods: {
     increment() {
-      this.$emit('counter-change', { amount: this.count + 1, id: this.id });
+      this.$emit('counter-change', { amount: this.amount + 1, id: this.id });
     },
     decrement() {
-      this.$emit('counter-change', { amount: this.count - 1, id: this.id });
+      if (this.amount > 0) {
+        this.$emit('counter-change', { amount: this.amount - 1, id: this.id });
+      }
     },
   },
   computed: {
     getCount() {
-      return this.count;
+      return this.amount;
     },
   },
 };
