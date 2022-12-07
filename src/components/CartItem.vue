@@ -15,7 +15,6 @@
     <FormCounter
       :amount="item.amount"
       :id="item.productId"
-
       @counter-change="counterChange">
     </FormCounter>
 
@@ -26,7 +25,7 @@
     <button class="product__del button-del"
             type="button"
             aria-label="Удалить товар из корзины"
-            @click.prevent="deleteProduct(item.productId)"
+            @click.prevent="deleteProduct()"
     >
       <svg width="20" height="20" fill="currentColor">
         <use xlink:href="#icon-close"></use>
@@ -38,7 +37,7 @@
 <script>
 import numberFormats from '@/helpers/numberFormat';
 import FormCounter from '@/components/FormCounter.vue';
-import { mapMutations } from 'vuex';
+// import { mapActions } from 'vuex';
 
 export default {
   name: 'CartItem',
@@ -46,9 +45,15 @@ export default {
   filters: { numberFormats },
   components: { FormCounter },
   methods: {
-    ...mapMutations({ deleteProduct: 'deleteCartProduct' }),
+    // ...mapActions({ deleteProduct: 'deleteProductFromCart' }),
+    deleteProduct() {
+      this.$store.dispatch(
+        'deleteProductFromCart',
+        { productId: this.item.productId },
+      );
+    },
     counterChange({ amount, id }) {
-      this.$store.commit(
+      this.$store.dispatch(
         'updateCartProductAmount',
         { productId: id, amount },
       );
@@ -61,7 +66,7 @@ export default {
       },
       set(value) {
         this.$store
-          .commit('updateCartProductAmount', { productId: this.item.productId, amount: value });
+          .dispatch('updateCartProductAmount', { productId: this.item.productId, amount: value });
       },
     },
   },

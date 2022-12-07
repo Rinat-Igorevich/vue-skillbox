@@ -36,9 +36,9 @@
             <label class="colors__label">
               <input class="colors__radio sr-only" type="radio" name="color"
                      v-model="currentColor"
-                     :value="color.value"
+                     :value="color.id"
                      checked="">
-              <span class="colors__value" v-bind:style="{'background-color': color.value}">
+              <span class="colors__value" v-bind:style="{'background-color': color.code}">
                   </span>
             </label>
           </li>
@@ -133,8 +133,9 @@
 </template>
 
 <script>
-import categories from '@/data/categories';
-import colors from '@/data/colors';
+// import colors from '@/data/colors';
+import axios from 'axios';
+import { API_BASE_URL } from '@/config';
 
 export default {
   name: 'ProductFilter',
@@ -145,14 +146,16 @@ export default {
       currentPriceTo: 0,
       currentCategoryId: 0,
       currentColor: '',
+      categoriesData: null,
+      colorsData: null,
     };
   },
   computed: {
     categories() {
-      return categories;
+      return this.categoriesData ? this.categoriesData.items : [];
     },
     colors() {
-      return colors;
+      return this.colorsData ? this.colorsData.items : [];
     },
   },
   watch: {
@@ -182,6 +185,20 @@ export default {
       this.$emit('update:categoryId', 0);
       this.$emit('update:color', '');
     },
+    loadCategories() {
+      axios.get(`${API_BASE_URL}/api/productCategories`)
+        // eslint-disable-next-line no-return-assign
+        .then((response) => this.categoriesData = response.data);
+    },
+    loadColors() {
+      axios.get(`${API_BASE_URL}/api/colors`)
+        // eslint-disable-next-line no-return-assign
+        .then((response) => this.colorsData = response.data);
+    },
+  },
+  created() {
+    this.loadCategories();
+    this.loadColors();
   },
 };
 </script>
