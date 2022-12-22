@@ -9,8 +9,8 @@
       {{ item.product.title }}
     </h3>
     <span class="product__code">
-                Артикул: {{ item.product.id }}
-              </span>
+      Артикул: {{ item.product.id }}
+    </span>
 
     <FormCounter
       :amount="item.amount"
